@@ -1,37 +1,8 @@
 ---
-# tasks file for ansible-role-cloudstack-init
+# tasks file for ansible-role-cloudstack_init
 
 - include_vars: "{{ ansible_os_family }}.yml"
 
 - include: "install-{{ ansible_os_family }}.yml"
 
-- name: Create log directory
-  file:
-    path: "{{ cloudstack-init_log_dir }}"
-    mode: 0755
-    owner: "{{ cloudstack-init_user }}"
-    group: "{{ cloudstack-init_group }}"
-    state: directory
-  notify: Restart cloudstack-init
-
-- name: Create db directory
-  file:
-    path: "{{ cloudstack-init_db_dir }}"
-    mode: 0755
-    owner: "{{ cloudstack-init_user }}"
-    group: "{{ cloudstack-init_group }}"
-    state: directory
-  notify: Restart cloudstack-init
-
-- name: Create cloudstack-init.conf
-  template:
-    src: cloudstack-init.conf.j2
-    dest: "{{ cloudstack-init_conf_file }}"
-    validate: echo %s
-  notify: Restart cloudstack-init
-
-- name: Start cloudstack-init
-  service:
-    name: "{{ cloudstack-init_service }}"
-    enabled: true
-    state: started
+- include: "configure-{{ ansible_os_family }}.yml"

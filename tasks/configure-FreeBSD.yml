@@ -1,0 +1,6 @@
+---
+
+- name: Enable cloudsshkey
+  service:
+    name: cloudsshkey
+    enabled: yes

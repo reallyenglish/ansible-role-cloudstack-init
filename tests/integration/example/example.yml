@@ -9,4 +9,4 @@
 
   pre_tasks:
   roles:
-    - cloudstack-init
+    - cloudstack_init
