@@ -2,4 +2,4 @@
 - hosts: localhost
   remote_user: root
   roles:
-    - ansible-role-cloudstack_init
+    - ansible-role-cloudstack-init
