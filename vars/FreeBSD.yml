@@ -1,0 +1,2 @@
+__cloudstack-init_db_dir: /var/db/cloudstack-init
+__cloudstack-init_conf_dir: /usr/local/etc/cloudstack-init

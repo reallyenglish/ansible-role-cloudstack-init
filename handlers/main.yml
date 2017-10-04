@@ -1,0 +1,6 @@
+---
+
+- name: Restart cloudstack-init
+  service:
+    name: cloudstack-init
+    state: restarted

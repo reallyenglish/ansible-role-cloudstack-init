@@ -1,0 +1,6 @@
+---
+
+- name: Install cloudstack-init
+  pkgng:
+    name: cloudstack-init
+    state: present
