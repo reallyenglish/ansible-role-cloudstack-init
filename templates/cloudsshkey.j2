@@ -72,7 +72,7 @@ fi
 
 # set ssh public key
 ${LOG} -t "cloud-sshkey" "Adding ssh public key ..."
-homedir=$(grep ^$user /etc/passwd|awk -F ":" '{print $6}')
+homedir=`awk -F ":" "{ if (\\$1 == \"${user}\") print \\$6 }" /etc/passwd`
 sshdir=$homedir/.ssh
 authorized=$sshdir/authorized_keys
 
