@@ -77,16 +77,16 @@ sshdir=$homedir/.ssh
 authorized=$sshdir/authorized_keys
 
 if [ ! -e $sshdir ]; then
-    mkdir $sshdir
+  mkdir $sshdir
 fi
 
 if [ ! -e $authorized ]; then
-    touch $authorized
+  touch $authorized
 fi
 
 if [ `grep -c "$publickey" $authorized` == 0 ]
 then
-        echo "$publickey" >> $authorized
+  echo "$publickey" >> $authorized
 fi
 
 exit 0
