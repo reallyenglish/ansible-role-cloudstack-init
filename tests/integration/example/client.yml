@@ -8,5 +8,14 @@
     no_proxy: "{{ no_proxy | default() }}"
 
   pre_tasks:
+    - name: Create dummy lease file for testing
+      copy:
+        content: |
+          lease {
+            interface "em3";
+            option dhcp-server-identifier 192.168.21.200;
+          }
+        dest: /var/db/dhclient.leases.em3
+
   roles:
-    - cloudstack_init
+    - ansible-role-cloudstack-init

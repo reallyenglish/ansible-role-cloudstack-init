@@ -8,5 +8,22 @@
     no_proxy: "{{ no_proxy | default() }}"
 
   pre_tasks:
+    - name: Create latest
+      file:
+        path: /var/www/htdocs/latest
+        state: directory
+        mode: 0755
+    - name: Create latest/public-keys
+      copy:
+        content: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDaaUGnUNr+mdx2lbSFiL5yGe+dD4pEjInJtQo0pTVcLwIy+dym7wtwHO6aBPQdKTfapkRWEKPlRwArKx1/lPIMiAYtz57NMEdAdbKoCQdaGfAp0gB3Qe9rhxfMpGlsE+7gCRaqzgEBjQIXvh+nD3yVfovWQfCrl5I/zx/AplUSwe8UE02AJ/fnTGqrPt6TbilxwIhr2WYwLIZCXvgTRPF1QM1dK62kFxeEX4FMPRF3cl0glCQnyyofe4iwmjEPm7ch1gIDCw6epavsxG3wa2JurKRIUjgblVxxl6ga4z6ZOgQtmPeKyqe7akln7lzf+lVHuJdiHLPxV4ErlSeqmedX foo@bar"
+        dest: /var/www/htdocs/latest/public-keys
+        mode: 0644
   roles:
-    - cloudstack_init
+    - reallyenglish.httpd-openbsd
+  vars:
+    httpd_openbsd_config: |
+      ext_addr="*"
+      prefork 2
+      server "default" {
+        listen on $ext_addr port 80
+      }
