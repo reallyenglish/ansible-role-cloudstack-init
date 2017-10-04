@@ -17,7 +17,7 @@ context "after provisioning finished" do
     end
 
     it "has /root/.ssh with correct permission" do
-      r = current_server.ssh_exec('export `stat -s /root/.ssh` ; echo -n $st_mode')
+      r = current_server.ssh_exec("export `stat -s /root/.ssh` ; echo -n $st_mode")
       expect(r).to eq "040700"
     end
 
