@@ -12,7 +12,6 @@ user=root
 
 # Add your DHCP lease files here
 DHCP_FILES="/var/db/dhclient.leases.*"
-WGET=/usr/local/bin/wget
 LOG=/usr/bin/logger
 
 valip() {
@@ -39,13 +38,13 @@ for DHCP_FILE in $DHCP_FILES; do
     if [ -n $SSHKEY_SERVER_IP ]; then
       ${LOG} -t "cloud-sshkey" "Found ssh key server IP \"${SSHKEY_SERVER_IP}\" in \"${DHCP_FILE}\""
       ${LOG} -t "cloud-sshkey" "Sending request to ssh key server at \"${SSHKEY_SERVER_IP}\""
-      publickey=$($WGET -t 3 -T 20 -O - http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
+      publickey=$(fetch -qo - http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
       sshkeycheck=0
       until [ $? -ne 4 ]; do
         [ $sshkeycheck -eq $maxcheck ] && continue 2
         sleep 3
-        ${LOG} -t "cloud-sshkey" "Wget exited with exit code $?, retrying"
-        publickey=$(${WGET} -q -t 3 -T 20 -O - http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
+        ${LOG} -t "cloud-sshkey" "fetch exited with exit code $?, retrying"
+        publickey=$(fetch -qo - http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
         sshkeycheck=$((sshkeycheck+1))
       done
       sshkey=$(echo $sshkey | tr -d '\r')
