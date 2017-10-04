@@ -9,7 +9,7 @@
 
 # Modify this line to specify the user (default is root)
 user=root
-umask 022
+umask 077
 
 # Add your DHCP lease files here
 DHCP_FILES="/var/db/dhclient.leases.*"
@@ -81,7 +81,6 @@ authorized=$sshdir/authorized_keys
 
 if [ ! -e $sshdir ]; then
   mkdir $sshdir
-  chmod 700 $sshdir
 fi
 
 if [ ! -e $authorized ]; then
