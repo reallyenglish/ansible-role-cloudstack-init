@@ -1,6 +1,6 @@
 # ansible-role-cloudstack-init
 
-A brief description of the role goes here.
+Initialize a host for cloudstack environment
 
 # Requirements
 
@@ -8,7 +8,7 @@ None
 
 # Role Variables
 
-| variable | description | default |
+| Variable | Description | Default |
 |----------|-------------|---------|
 
 
@@ -19,6 +19,10 @@ None
 # Example Playbook
 
 ```yaml
+- hosts: localhost
+  roles:
+    - ansible-role-cloudstack-init
+  vars:
 ```
 
 # License

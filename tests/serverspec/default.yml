@@ -2,4 +2,3 @@
   roles:
     - ansible-role-cloudstack-init
   vars:
-    cloudstack-init_config: ""

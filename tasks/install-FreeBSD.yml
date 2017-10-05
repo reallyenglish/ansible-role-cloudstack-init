@@ -1,6 +1,15 @@
 ---
 
-- name: Install cloudstack-init
-  pkgng:
-    name: cloudstack-init
-    state: present
+- name: Install cloudsshkey
+  template:
+    src: cloudsshkey.j2
+    dest: /usr/local/sbin/cloudsshkey
+    mode: 0755
+    validate: sh -n %s
+
+- name: Install cloudsshkey rc.d script
+  template:
+    src: cloudsshkey.rcd.j2
+    dest: /usr/local/etc/rc.d/cloudsshkey
+    mode: 0755
+    validate: sh -n %s

@@ -1,8 +1,1 @@
-cloudstack-init_user: cloudstack-init
-cloudstack-init_group: cloudstack-init
-cloudstack-init_log_dir: /var/log/cloudstack-init
-cloudstack-init_db_dir: "{{ __cloudstack-init_db_dir }}"
-cloudstack-init_service: cloudstack-init
-cloudstack-init_conf_dir: "{{ __cloudstack-init_conf_dir }}"
-cloudstack-init_conf_file: "{{ __cloudstack-init_conf_dir }}/cloudstack-init.conf"
-cloudstack-init_flags: ""
+---
