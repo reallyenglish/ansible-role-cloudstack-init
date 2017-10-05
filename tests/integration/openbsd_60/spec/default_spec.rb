@@ -16,6 +16,7 @@ context "after provisioning finished" do
       when "openbsd"
         command = "sudo /usr/local/sbin/cloudsshkey"
       end
+      command
     end
     let(:successful_message) do
       msg = ""
