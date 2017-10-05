@@ -1,0 +1,8 @@
+---
+
+- name: Install cloudsshkey
+  template:
+    src: cloudsshkey.j2
+    dest: /usr/local/sbin/cloudsshkey
+    mode: 0755
+    validate: sh -n %s
