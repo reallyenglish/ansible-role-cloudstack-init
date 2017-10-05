@@ -23,7 +23,7 @@ context "after provisioning finished" do
       r = current_server.ssh_exec "uname -s"
       case r.chomp.downcase
       when "freebsd"
-        msg = /^Starting cloudsshkey$/
+        msg = /^Starting cloudsshkey\.$/
       when "openbsd"
         # XXX the script does not output anything
         msg = /.*/
