@@ -6,7 +6,6 @@
     # XXX replace `dest` with `path` when all ansible version is newer than 2.3.x
     dest: /etc/rc.local
     line: /usr/local/sbin/cloudsshkey
-    regexp: '/usr/local/sbin/cloudsshkey'
     mode: 0644
     create: yes
 
