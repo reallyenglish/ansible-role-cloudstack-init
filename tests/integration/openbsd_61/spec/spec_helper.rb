@@ -30,12 +30,12 @@ end
 
 Infrataster::Server.define(
   :client1,
-  "192.168.21.100",
+  "192.168.21.103",
   vagrant: true
 )
 Infrataster::Server.define(
   :server1,
-  "192.168.21.200",
+  "192.168.21.203",
   vagrant: true
 )
 
