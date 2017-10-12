@@ -22,16 +22,11 @@ keys_received=0
 file_count=0
 error_count=0
 
-case `uname -s` in
-  FreeBSD)
-  FETCH_CMD="/usr/bin/fetch -qo -"
-    ;;
-  OpenBSD)
-  FETCH_CMD="/usr/bin/ftp -o -"
-    ;;
-  *)
-    ;;
-esac
+{% if ansible_os_family == 'FreeBSD' %}
+FETCH_CMD="/usr/bin/fetch -qo -"
+{% elif ansible_os_family == 'OpenBSD' %}
+FETCH_CMD="/usr/bin/ftp -o -"
+{% endif %}
 
 for DHCP_FILE in $DHCP_FILES; do
   if [ -f $DHCP_FILE ]; then
