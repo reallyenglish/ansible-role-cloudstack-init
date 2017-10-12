@@ -47,22 +47,29 @@ Vagrant.configure("2") do |config|
     v.memory = 256
     v.cpus = 1
   end
-  config.vm.box = "trombik/ansible-freebsd-10.3-amd64"
 
-  config.vm.define "client1" do |c|
-    c.vm.network "private_network", ip: "192.168.21.100"
-    c.vm.hostname = "client1.virtualbox.reallyenglish.com"
-    c.vm.provision :ansible do |ansible|
-      ansible.limit = "192.168.21.100"
-      ansible.playbook = "site.yml"
-      ansible.extra_vars = {
-        ansible_python_interpreter: "/usr/local/bin/python",
-        http_proxy: http_proxy,
-        https_proxy: http_proxy,
-        no_proxy: "localhost,127.0.0.1,.example.com"
-      }
-      ansible.inventory_path = "inventories/staging"
-      ansible.verbose = "v"
+  clients = [
+    { name: "freebsd103", box: "trombik/ansible-freebsd-10.3-amd64", ip: "192.168.21.100" },
+    { name: "openbsd60",  box: "trombik/ansible-openbsd-6.0-amd64", ip: "192.168.21.101" },
+    { name: "openbsd61",  box: "trombik/ansible-openbsd-6.1-amd64", ip: "192.168.21.102" }
+  ]
+  clients.each do |client|
+    config.vm.define client[:name] do |c|
+      c.vm.box = client[:box]
+      c.vm.network "private_network", ip: client[:ip]
+      c.vm.hostname = "#{client[:name]}.virtualbox.reallyenglish.com"
+      c.vm.provision :ansible do |ansible|
+        ansible.limit = client[:ip]
+        ansible.playbook = "site.yml"
+        ansible.extra_vars = {
+          ansible_python_interpreter: "/usr/local/bin/python",
+          http_proxy: http_proxy,
+          https_proxy: http_proxy,
+          no_proxy: "localhost,127.0.0.1,.example.com"
+        }
+        ansible.inventory_path = "inventories/staging"
+        ansible.verbose = "v"
+      end
     end
   end
 
