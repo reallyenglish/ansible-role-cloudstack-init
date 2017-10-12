@@ -15,6 +15,5 @@
     # XXX replace `dest` with `path` when all ansible version is newer than 2.3.x
     dest: /etc/rc.local
     line: /usr/local/sbin/cloud_set_guest_password
-    regexp: '/usr/local/sbin/cloud_set_guest_password'
     mode: 0644
     create: yes
