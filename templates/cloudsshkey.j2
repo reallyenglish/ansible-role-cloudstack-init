@@ -22,6 +22,17 @@ keys_received=0
 file_count=0
 error_count=0
 
+case `uname -s` in
+  FreeBSD)
+  FETCH_CMD="/usr/bin/fetch -qo -"
+    ;;
+  OpenBSD)
+  FETCH_CMD="/usr/bin/ftp -o -"
+    ;;
+  *)
+    ;;
+esac
+
 for DHCP_FILE in $DHCP_FILES; do
   if [ -f $DHCP_FILE ]; then
     file_count=$((file_count+1))
@@ -39,14 +50,14 @@ for DHCP_FILE in $DHCP_FILES; do
     if [ -n $SSHKEY_SERVER_IP ]; then
       ${LOG} -t "cloud-sshkey" "Found ssh key server IP \"${SSHKEY_SERVER_IP}\" in \"${DHCP_FILE}\""
       ${LOG} -t "cloud-sshkey" "Sending request to ssh key server at \"${SSHKEY_SERVER_IP}\""
-      publickey=$(fetch -qo - http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
+      publickey=$($FETCH_CMD http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
       exit_status=$?
       sshkeycheck=0
       until [ $exit_status -eq 0 ]; do
         [ $sshkeycheck -eq $maxcheck ] && continue 2
         sleep 3
         ${LOG} -t "cloud-sshkey" "fetch exited with exit code $exit_status, retrying"
-        publickey=$(fetch -qo - http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
+        publickey=$($FETCH_CMD http://$SSHKEY_SERVER_IP/latest/public-keys 2>/dev/null)
         exit_status=$?
         sshkeycheck=$((sshkeycheck+1))
       done
@@ -93,3 +104,5 @@ then
 fi
 
 exit 0
+
+# vim: ft=sh
