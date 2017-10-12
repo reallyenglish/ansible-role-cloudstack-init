@@ -6,10 +6,11 @@ end
 sleep 10 if ENV["JENKINS_HOME"]
 
 context "after provisioning finished" do
+  # rubocop:disable Metrics/BlockLength
   [
     server(:freebsd103),
     server(:openbsd60),
-    server(:openbsd61),
+    server(:openbsd61)
   ].each do |s|
     describe s do
       let(:start_command) do
@@ -56,4 +57,5 @@ context "after provisioning finished" do
       end
     end
   end
+  # rubocop:enable Metrics/BlockLength
 end

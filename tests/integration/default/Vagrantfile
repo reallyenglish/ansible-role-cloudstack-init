@@ -51,7 +51,7 @@ Vagrant.configure("2") do |config|
   clients = [
     { name: "freebsd103", box: "trombik/ansible-freebsd-10.3-amd64", ip: "192.168.21.100" },
     { name: "openbsd60",  box: "trombik/ansible-openbsd-6.0-amd64", ip: "192.168.21.101" },
-    { name: "openbsd61",  box: "trombik/ansible-openbsd-6.1-amd64", ip: "192.168.21.102" },
+    { name: "openbsd61",  box: "trombik/ansible-openbsd-6.1-amd64", ip: "192.168.21.102" }
   ]
   clients.each do |client|
     config.vm.define client[:name] do |c|
