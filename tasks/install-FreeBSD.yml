@@ -13,3 +13,22 @@
     dest: /usr/local/etc/rc.d/cloudsshkey
     mode: 0755
     validate: sh -n %s
+
+- name: Install wget
+  pkgng:
+    name: wget
+    state: present
+
+- name: Install cloud_set_guest_password.j2
+  template:
+    src: cloud_set_guest_password.j2
+    dest: /usr/local/sbin/cloud_set_guest_password
+    mode: 0755
+    validate: sh -n %s
+
+- name: Install cloud_set_guest_password rc.d script
+  template:
+    src: cloudsshkey.rcd.j2
+    dest: /usr/local/etc/rc.d/cloud_set_guest_password
+    mode: 0755
+    validate: sh -n %s
