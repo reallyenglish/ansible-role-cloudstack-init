@@ -29,8 +29,18 @@ if ENV["JENKINS_HOME"]
 end
 
 Infrataster::Server.define(
-  :client1,
+  :freebsd103,
   "192.168.21.100",
+  vagrant: true
+)
+Infrataster::Server.define(
+  :openbsd60,
+  "192.168.21.101",
+  vagrant: true
+)
+Infrataster::Server.define(
+  :openbsd61,
+  "192.168.21.103",
   vagrant: true
 )
 Infrataster::Server.define(
