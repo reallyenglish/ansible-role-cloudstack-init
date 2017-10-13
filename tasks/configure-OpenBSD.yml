@@ -8,3 +8,12 @@
     line: /usr/local/sbin/cloudsshkey
     mode: 0644
     create: yes
+
+- name: Create password start command in /etc/rc.local
+  lineinfile:
+    # path: /etc/rc.local
+    # XXX replace `dest` with `path` when all ansible version is newer than 2.3.x
+    dest: /etc/rc.local
+    line: /usr/local/sbin/cloud_set_guest_password
+    mode: 0644
+    create: yes

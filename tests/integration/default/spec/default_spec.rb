@@ -13,6 +13,10 @@ context "after provisioning finished" do
     server(:openbsd61)
   ].each do |s|
     describe s do
+      let(:initial_password) do
+        current_server.ssh_exec("sudo getent passwd root | cut -d':' -f2")
+      end
+
       let(:start_command) do
         command = ""
         r = current_server.ssh_exec "uname -s"
@@ -24,6 +28,7 @@ context "after provisioning finished" do
         end
         command
       end
+
       let(:successful_message) do
         msg = ""
         r = current_server.ssh_exec "uname -s"
@@ -35,6 +40,22 @@ context "after provisioning finished" do
           msg = /.*/
         end
         msg
+      end
+
+      let(:passwd_command) do
+        command = ""
+        r = current_server.ssh_exec "uname -s"
+        case r.chomp.downcase
+        when "freebsd"
+          command = "/usr/local/sbin/cloud_set_guest_password"
+        when "openbsd"
+          command = "/usr/local/sbin/cloud_set_guest_password"
+        end
+        command
+      end
+
+      it "gets initial password" do
+        expect(initial_password).not_to eq ""
       end
 
       it "runs cloudsshkey" do
@@ -54,6 +75,16 @@ context "after provisioning finished" do
       it "has /root/.ssh/authorized_keys with correct permission" do
         r = current_server.ssh_exec("export `sudo stat -s /root/.ssh/authorized_keys` ; echo -n $st_mode")
         expect(r).to eq "0100600"
+      end
+
+      it "runs cloud_set_guest_password" do
+        r = current_server.ssh_exec("sudo #{passwd_command} >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
+      end
+
+      it "has root password updated" do
+        password = current_server.ssh_exec("sudo getent passwd root | cut -d':' -f2")
+        expect(password.chomp).not_to eq initial_password
       end
     end
   end

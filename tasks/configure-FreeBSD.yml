@@ -4,3 +4,8 @@
   service:
     name: cloudsshkey
     enabled: yes
+
+- name: Enable cloud_set_guest_password
+  service:
+    name: cloud_set_guest_password
+    enabled: yes
