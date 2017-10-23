@@ -9,3 +9,8 @@
   service:
     name: cloud_set_guest_password
     enabled: yes
+
+- name: Enable cs_configinit
+  service:
+    name: cs_configinit
+    enabled: yes

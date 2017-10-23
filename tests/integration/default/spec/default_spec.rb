@@ -104,5 +104,20 @@ context "after provisioning finished" do
       end
     end
   end
+  [
+    server(:freebsd103)
+  ].each do |s|
+    describe s do
+      it "runs /usr/local/etc/rc.d/cs_configinit >/dev/null 2>&1 && echo -n OK" do
+        r = current_server.ssh_exec("/usr/local/etc/rc.d/cs_configinit")
+        expect(r).to eq "OK"
+      end
+
+      it "runs the content of user-data" do
+        r = current_server.ssh_exec("ls -al /foo >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
+      end
+    end
+  end
   # rubocop:enable Metrics/BlockLength
 end
