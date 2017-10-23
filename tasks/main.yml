@@ -11,4 +11,4 @@
   file:
     name: "{{ cloudstack_init_dhclient_lease_dir }}/dhclient.leases.{{ item }}"
     state: absent
-  with_items: {{ cloudstack_init_interfaces }}
+  with_items: "{{ cloudstack_init_interfaces }}"

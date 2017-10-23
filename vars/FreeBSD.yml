@@ -1,1 +1,4 @@
 ---
+__cloudstack_init_dhclient_lease_dir: /var/db
+__cloudstack_init_interfaces:
+  - em0

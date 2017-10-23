@@ -1,1 +1,3 @@
 ---
+cloudstack_init_dhclient_lease_dir: "{{ __cloudstack_init_dhclient_lease_dir }}"
+cloudstack_init_interfaces: "{{ __cloudstack_init_interfaces }}"
