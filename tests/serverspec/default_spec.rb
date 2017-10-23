@@ -27,6 +27,10 @@ when "openbsd"
     it { should be_owned_by "root" }
     it { should be_grouped_into "wheel" }
   end
+
+  describe command("ls /var/db/dhclient.leases.*") do
+    its(:exit_status) { should_not eq 0 }
+  end
 when "freebsd"
   describe file("/usr/local/etc/rc.d/cloudsshkey") do
     it { should exist }
@@ -50,5 +54,9 @@ when "freebsd"
 
   describe service("cloud_set_guest_password") do
     it { should be_enabled }
+  end
+
+  describe command("ls /var/db/dhclient.leases.*") do
+    its(:exit_status) { should_not eq 0 }
   end
 end
