@@ -88,5 +88,21 @@ context "after provisioning finished" do
       end
     end
   end
+  [
+    server(:openbsd60),
+    server(:openbsd61)
+  ].each do |s|
+    describe s do
+      it "runs /etc/rc.firsttime" do
+        r = current_server.ssh_exec("sudo sh /etc/rc.firsttime >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
+      end
+
+      it "runs the content of user-data" do
+        r = current_server.ssh_exec("ls -al /foo >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
+      end
+    end
+  end
   # rubocop:enable Metrics/BlockLength
 end

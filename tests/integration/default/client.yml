@@ -19,3 +19,7 @@
 
   roles:
     - ansible-role-cloudstack-init
+  vars:
+    cloudstack_init_interfaces:
+      - em0
+      - em1

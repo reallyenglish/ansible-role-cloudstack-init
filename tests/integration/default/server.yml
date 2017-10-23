@@ -20,6 +20,13 @@
         content: PassWord
         mode: 0644
 
+    - name: Create latest/user-data
+      copy:
+        dest: /var/www/htdocs/latest/user-data
+        content: |
+          touch /foo
+        mode: 0644
+
     - name: Create latest/public-keys
       copy:
         content: "ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQDaaUGnUNr+mdx2lbSFiL5yGe+dD4pEjInJtQo0pTVcLwIy+dym7wtwHO6aBPQdKTfapkRWEKPlRwArKx1/lPIMiAYtz57NMEdAdbKoCQdaGfAp0gB3Qe9rhxfMpGlsE+7gCRaqzgEBjQIXvh+nD3yVfovWQfCrl5I/zx/AplUSwe8UE02AJ/fnTGqrPt6TbilxwIhr2WYwLIZCXvgTRPF1QM1dK62kFxeEX4FMPRF3cl0glCQnyyofe4iwmjEPm7ch1gIDCw6epavsxG3wa2JurKRIUjgblVxxl6ga4z6ZOgQtmPeKyqe7akln7lzf+lVHuJdiHLPxV4ErlSeqmedX foo@bar"
