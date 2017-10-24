@@ -14,6 +14,10 @@ Also, the role does:
 
 * clean up VM
 
+## Notes for FreeBSD users
+
+If `user-data` is a shell script, the `user-data` must start with `#!/bin/sh`.
+
 # Requirements
 
 None
