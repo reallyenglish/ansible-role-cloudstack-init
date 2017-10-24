@@ -26,7 +26,23 @@ None
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `cloudstack_init_dhclient_lease_dir` | path to directory where DHCP lease files are kept | `{{ __cloudstack_init_dhclient_lease_dir }}` |
+| `cloudstack_init_interfaces` | list of interfaces that will be removed from DHCP lease files | `{{ __cloudstack_init_interfaces }}` |
 
+
+## FreeBSD
+
+| Variable | Default |
+|----------|---------|
+| `__cloudstack_init_dhclient_lease_dir` | `/var/db` |
+| `__cloudstack_init_interfaces` | `["em0"]` |
+
+## OpenBSD
+
+| Variable | Default |
+|----------|---------|
+| `__cloudstack_init_dhclient_lease_dir` | `/var/db` |
+| `__cloudstack_init_interfaces` | `["em0"]` |
 
 # Dependencies
 
