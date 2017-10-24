@@ -24,6 +24,7 @@
       copy:
         dest: /var/www/htdocs/latest/user-data
         content: |
+          #!/bin/sh
           touch /foo
         mode: 0644
 

@@ -108,9 +108,10 @@ context "after provisioning finished" do
     server(:freebsd103)
   ].each do |s|
     describe s do
-      it "runs /usr/local/etc/rc.d/cs_configinit >/dev/null 2>&1 && echo -n OK" do
-        r = current_server.ssh_exec("/usr/local/etc/rc.d/cs_configinit")
-        expect(r).to eq "OK"
+      it "runs /usr/local/etc/rc.d/cs_configinit" do
+        r = current_server.ssh_exec("sudo /usr/local/etc/rc.d/cs_configinit start")
+        expect(r).to match(%r{^Fetching cloudstack user-data\.$})
+        expect(r).to match(%r{^Processing cloudstack user-data\.$})
       end
 
       it "runs the content of user-data" do
