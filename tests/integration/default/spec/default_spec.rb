@@ -112,8 +112,8 @@ context "after provisioning finished" do
     describe s do
       it "runs /usr/local/etc/rc.d/cs_configinit" do
         r = current_server.ssh_exec("sudo /usr/local/etc/rc.d/cs_configinit start")
-        expect(r).to match(%r{^Fetching cloudstack user-data\.$})
-        expect(r).to match(%r{^Processing cloudstack user-data\.$})
+        expect(r).to match(/^Fetching cloudstack user-data\.$/)
+        expect(r).to match(/^Processing cloudstack user-data\.$/)
       end
 
       it "runs the content of user-data" do
