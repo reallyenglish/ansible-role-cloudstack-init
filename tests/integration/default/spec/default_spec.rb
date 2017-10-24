@@ -10,7 +10,8 @@ context "after provisioning finished" do
   [
     server(:freebsd103),
     server(:openbsd60),
-    server(:openbsd61)
+    server(:openbsd61),
+    server(:openbsd62)
   ].each do |s|
     describe s do
       let(:initial_password) do
@@ -90,7 +91,8 @@ context "after provisioning finished" do
   end
   [
     server(:openbsd60),
-    server(:openbsd61)
+    server(:openbsd61),
+    server(:openbsd62)
   ].each do |s|
     describe s do
       it "runs /etc/rc.firsttime" do
