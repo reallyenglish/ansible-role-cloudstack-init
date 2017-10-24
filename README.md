@@ -1,6 +1,18 @@
 # ansible-role-cloudstack-init
 
-Initialize a host for cloudstack environment
+Initialize a host for cloudstack environment.
+
+This role configure VMs to:
+
+* install ssh key pair (`keypair` in `deployVirtualMachine`)
+* update root password if available
+* run `user-data` (`userdata` in `deployVirtualMachine`)
+
+upon the next boot.
+
+Also, the role does:
+
+* clean up VM
 
 # Requirements
 
