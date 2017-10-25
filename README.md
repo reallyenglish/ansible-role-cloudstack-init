@@ -14,22 +14,6 @@ Also, the role does:
 
 * clean up VM
 
-## Notes for FreeBSD users
-
-`user-data` is processed in the following order.
-
-If the first two bytes are '#!', make it executable and run it.
-
-If the first two bytes are '>/', the first line contains a path for the
-rest of the file to be written into.
-
-If the first three bytes are '>>/', the first line contains a path for the
-rest of the file to be appended into.
-
-Otherwise, hope this is an archive containing more files for us to process.
-
-## Notes for OpenBSD users
-
 `user-data` must be a binary or a script with no arguments. if it is a script,
 the `user-data` must start with a valid `#!` line.
 
