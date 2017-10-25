@@ -17,3 +17,10 @@
     line: /usr/local/sbin/cloud_set_guest_password
     mode: 0644
     create: yes
+
+- name: Create rc.firsttime
+  template:
+    src: rc.firsttime.j2
+    dest: /etc/rc.firsttime
+    mode: 0755
+    validate: sh -n %s

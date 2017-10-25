@@ -13,6 +13,8 @@ galaxy_info:
     versions:
     - 6.0
     - 6.1
+# XXX see https://github.com/ansible/galaxy-issues/issues/296
+#   - 6.2
 #  - name: Ubuntu
 #    versions:
 #    - trusty

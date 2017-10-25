@@ -1,0 +1,62 @@
+#!/bin/sh
+# Managed by ansible
+
+# KEYWORD: firstboot
+# PROVIDE: cs_configinit
+# REQUIRE: NETWORKING
+# BEFORE: SERVERS cs_fetchkey firstboot_freebsd_update firstboot_pkgs
+
+# Define cs_configinit_enable=YES in /etc/rc.conf to enable automatic
+# system configuration from cloudstack user-data when the system first boots.
+: ${cs_configinit_enable=NO}
+
+. /etc/rc.subr
+
+name="cs_configinit"
+rcvar=cs_configinit_enable
+start_cmd="cs_configinit_run"
+stop_cmd=":"
+
+cs_configinit_run()
+{
+    USERDATA_SERVER_IP=""
+    DHCP_LEASES="/var/db/dhclient.leases.*"
+    for DHCP_FILE in ${DHCP_LEASES}; do
+        if [ -f $DHCP_FILE ]; then
+            USERDATA_SERVER_IP=$(grep dhcp-server-identifier $DHCP_FILE | tail -1 | awk '{print $NF}' | tr -d '\;')
+            if [ -n ${SSHKEY_SERVER_IP} ]; then
+                break
+            fi
+        fi
+    done
+    if [ ! -n ${USERDATA_SERVER_IP} ]; then
+        echo "cannot find SSH key server"
+        exit 1
+    fi
+    CONFIGURL="http://${USERDATA_SERVER_IP}/latest/user-data"
+
+	# Download to a temporary location.
+	echo -n "Fetching cloudstack user-data"
+	CONFFILE=`mktemp "${TMPDIR:-/tmp}/configinit.XXXXXX"`
+	fetch -o ${CONFFILE} ${CONFIGURL} 2>/dev/null
+
+	# If we succeeded, process it; otherwise report failure.
+	if [ $? = 0 ]; then
+		# Process the user-data.
+		echo .
+		echo -n "Processing cloudstack user-data"
+		/usr/local/sbin/cs_configinit $CONFFILE
+		echo .
+	else
+		echo " failed."
+	fi
+
+	# Whether we suceeded or not, delete the temporary file.
+	rm $CONFFILE
+
+	# Signal /etc/rc to reload rc.conf in case it changed.
+	kill -ALRM $$
+}
+
+load_rc_config $name
+run_rc_command "$1"

@@ -10,7 +10,8 @@ context "after provisioning finished" do
   [
     server(:freebsd103),
     server(:openbsd60),
-    server(:openbsd61)
+    server(:openbsd61),
+    server(:openbsd62)
   ].each do |s|
     describe s do
       let(:initial_password) do
@@ -85,6 +86,39 @@ context "after provisioning finished" do
       it "has root password updated" do
         password = current_server.ssh_exec("sudo getent passwd root | cut -d':' -f2")
         expect(password.chomp).not_to eq initial_password
+      end
+    end
+  end
+  [
+    server(:openbsd60),
+    server(:openbsd61),
+    server(:openbsd62)
+  ].each do |s|
+    describe s do
+      it "runs /etc/rc.firsttime" do
+        r = current_server.ssh_exec("sudo sh /etc/rc.firsttime >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
+      end
+
+      it "runs the content of user-data" do
+        r = current_server.ssh_exec("ls -al /foo >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
+      end
+    end
+  end
+  [
+    server(:freebsd103)
+  ].each do |s|
+    describe s do
+      it "runs /usr/local/etc/rc.d/cs_configinit" do
+        r = current_server.ssh_exec("sudo /usr/local/etc/rc.d/cs_configinit start")
+        expect(r).to match(/^Fetching cloudstack user-data\.$/)
+        expect(r).to match(/^Processing cloudstack user-data\.$/)
+      end
+
+      it "runs the content of user-data" do
+        r = current_server.ssh_exec("ls -al /foo >/dev/null 2>&1 && echo -n OK")
+        expect(r).to eq "OK"
       end
     end
   end

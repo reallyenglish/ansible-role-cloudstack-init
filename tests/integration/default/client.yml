@@ -8,12 +8,6 @@
     no_proxy: "{{ no_proxy | default() }}"
 
   pre_tasks:
-    - name: Remove /var/db/dhclient.leases.em0
-      # XXX cloud_set_guest_password assumes single file there
-      file:
-        path: /var/db/dhclient.leases.em0
-        state: absent
-
     - name: Create dummy lease file for testing
       copy:
         content: |
@@ -25,3 +19,7 @@
 
   roles:
     - ansible-role-cloudstack-init
+  vars:
+    cloudstack_init_interfaces:
+      - em0
+      - em1

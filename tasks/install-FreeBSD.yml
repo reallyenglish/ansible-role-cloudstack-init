@@ -32,3 +32,17 @@
     dest: /usr/local/etc/rc.d/cloud_set_guest_password
     mode: 0755
     validate: sh -n %s
+
+- name: Install cs_configinit
+  template:
+    src: cs_configinit.j2
+    dest: /usr/local/sbin/cs_configinit
+    mode: 0755
+    validate: sh -n %s
+
+- name: Install cs_configinit rc.d
+  template:
+    src: cs_configinit.rcd.j2
+    dest: /usr/local/etc/rc.d/cs_configinit
+    mode: 0755
+    validate: sh -n %s

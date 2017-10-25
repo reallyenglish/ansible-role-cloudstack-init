@@ -6,3 +6,9 @@
 - include: "install-{{ ansible_os_family }}.yml"
 
 - include: "configure-{{ ansible_os_family }}.yml"
+
+- name: Remove dhclient.leases files
+  file:
+    name: "{{ cloudstack_init_dhclient_lease_dir }}/dhclient.leases.{{ item }}"
+    state: absent
+  with_items: "{{ cloudstack_init_interfaces }}"

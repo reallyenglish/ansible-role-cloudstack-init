@@ -1,0 +1,19 @@
+#!/bin/sh -e
+# Managed by ansible
+
+# Check parameters.
+if [ $# -ne 1 ]; then
+	echo "usage: cs_configinit configdata"
+	exit 1
+fi
+CONFDATA=$1
+
+# Check that the file exists.
+if ! [ -f ${CONFDATA} ]; then
+	echo "Config file does not exist: ${CONFDATA}"
+	exit 1
+fi
+
+chmod +x ${CONFDATA}
+${CONFDATA}
+exit 0

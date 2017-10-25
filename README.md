@@ -1,6 +1,21 @@
 # ansible-role-cloudstack-init
 
-Initialize a host for cloudstack environment
+Initialize a host for cloudstack environment.
+
+This role configure VMs to:
+
+* install ssh key pair (`keypair` in `deployVirtualMachine`)
+* update root password if available
+* run `user-data` (`userdata` in `deployVirtualMachine`)
+
+upon the next boot.
+
+Also, the role does:
+
+* clean up VM
+
+`user-data` must be a binary or a script with no arguments. if it is a script,
+the `user-data` must start with a valid `#!` line.
 
 # Requirements
 
@@ -10,7 +25,23 @@ None
 
 | Variable | Description | Default |
 |----------|-------------|---------|
+| `cloudstack_init_dhclient_lease_dir` | path to directory where DHCP lease files are kept | `{{ __cloudstack_init_dhclient_lease_dir }}` |
+| `cloudstack_init_interfaces` | list of interfaces that will be removed from DHCP lease files | `{{ __cloudstack_init_interfaces }}` |
 
+
+## FreeBSD
+
+| Variable | Default |
+|----------|---------|
+| `__cloudstack_init_dhclient_lease_dir` | `/var/db` |
+| `__cloudstack_init_interfaces` | `["em0"]` |
+
+## OpenBSD
+
+| Variable | Default |
+|----------|---------|
+| `__cloudstack_init_dhclient_lease_dir` | `/var/db` |
+| `__cloudstack_init_interfaces` | `["em0"]` |
 
 # Dependencies
 
