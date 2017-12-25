@@ -49,10 +49,10 @@ Vagrant.configure("2") do |config|
   end
 
   clients = [
-    { name: "freebsd103", box: "trombik/ansible-freebsd-10.3-amd64", ip: "192.168.21.100" },
-    { name: "openbsd60",  box: "trombik/ansible-openbsd-6.0-amd64", ip: "192.168.21.101" },
-    { name: "openbsd61",  box: "trombik/ansible-openbsd-6.1-amd64", ip: "192.168.21.102" },
-    { name: "openbsd62",  box: "trombik/ansible-openbsd-6.2-amd64", ip: "192.168.21.103" }
+    { name: "freebsd103", box: "mitsuruy/ansible-freebsd-10.3-amd64", ip: "192.168.21.100" },
+    { name: "openbsd60",  box: "mitsuruy/ansible-openbsd-6.0-amd64", ip: "192.168.21.101" },
+    { name: "openbsd61",  box: "mitsuruy/ansible-openbsd-6.1-amd64", ip: "192.168.21.102" },
+    { name: "openbsd62",  box: "mitsuruy/ansible-openbsd-6.2-amd64", ip: "192.168.21.103" }
   ]
   clients.each do |client|
     config.vm.define client[:name] do |c|
@@ -75,7 +75,7 @@ Vagrant.configure("2") do |config|
   end
 
   config.vm.define "server1" do |c|
-    c.vm.box = "trombik/ansible-openbsd-6.1-amd64"
+    c.vm.box = "mitsuruy/ansible-openbsd-6.1-amd64"
     c.vm.network "private_network", ip: "192.168.21.200"
     c.vm.hostname = "server1.virtualbox.reallyenglish.com"
     c.vm.provision :ansible do |ansible|
